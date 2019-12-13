@@ -1,4 +1,4 @@
-# readmore-server
+# readmore-server 
 
 ## 编写 web 服务
 
@@ -9,15 +9,14 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
 func main() {
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprint(writer, "Hello World")
+		fmt.Fprint(writer, "Welcome to readmore.snowdreams1006.cn! \n")
 	})
-	log.Fatal(http.ListenAndServe(":3000",nil))
+	http.ListenAndServe(":80",nil)
 }
 ```
 
@@ -27,6 +26,8 @@ func main() {
 go run main.go
 ```
 
+除了直接启动服务之外,还可以输入 `go build -o readmore main.go` 在当前目录下生成可执行文件,后续执行 `./readmore` 启动本地服务.
+
 3. 在**任意目录**下打开终端,输入 `curl localhost:3000` 命令测试本地服务
 
 ```shell script
@@ -35,7 +36,7 @@ curl localhost:3000
 
 或者打开浏览器直接访问 `localhost:3000` 网址也会得到 `Hello World` 响应.
 
-## 编写 Dockerfile
+## 构建本地镜像
 
 1. 在**当前目录**下新建 `Dockerfile` 文件且文件内容如下:
 
@@ -77,3 +78,4 @@ curl localhost:3000
 
 - 在线生成 `.gitignore` 忽略文件 [http://gitignore.io/](http://gitignore.io/)
 - [如何快速正确使用Docker部署Go Web App](https://www.jianshu.com/p/b66af29452e7)
+- [基于Docker和Golang搭建Web服务器](https://www.cnblogs.com/foxy/p/9274329.html)
