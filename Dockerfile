@@ -1,9 +1,11 @@
-FROM alpine:latest #使用了镜像大小体积只有5MB的alpine镜像
+FROM golang:1.13.1-alpine3.10 AS builder
 
-WORKDIR / #设置工作路径
+RUN mkdir -p /go/src/github.com/snowdreams1006/readmore-server
 
-ADD readmore / #把上文编译好的main文件添加到镜像里
+COPY . /go/src/github.com/snowdreams1006/readmore-server
 
-EXPOSE 3000 #暴露容器内部端口
+WORKDIR /go/src/github.com/snowdreams1006/readmore-server
 
-ENTRYPOINT ["./readmore"] #入口
+RUN go build -o readmore-server main.go
+
+CMD /go/src/github.com/snowdreams1006/readmore-server
