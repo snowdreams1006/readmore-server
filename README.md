@@ -27,7 +27,7 @@ func main() {
 go run main.go
 ```
 
-3. 在任意目录下打开终端,输入 `curl localhost:3000` 命令测试本地服务
+3. 在**任意目录**下打开终端,输入 `curl localhost:3000` 命令测试本地服务
 
 ```shell script
 curl localhost:3000
@@ -51,7 +51,7 @@ EXPOSE 3000 #暴露容器内部端口
 ENTRYPOINT ["./main"] #入口
 ```
 
-2. 在当前目录下运行 `docker build -t readmore .` 命令构建镜像
+2. 在**当前目录**下打开终端,输入 `docker build -t readmore .` 命令构建本地镜像
 
 ```shell script
 docker build -t readmore .
@@ -59,11 +59,19 @@ docker build -t readmore .
 
 > 请确保本地已安装 `docker` 环境,如果输入 `docker` 命令提示 `-bash: docker: command not found` 则表示未安装 `docker` 环境,请参考[]()完成安装.
 
-3. 在任意目录下
+3. 在**任意目录**下打开终端,输入 `docker run --rm -it -d -p 3000:3000 readmore` 命令测试本地镜像
 
 ```shell script
 docker run --rm -it -d -p 3000:3000 readmore
 ```
+
+4. 在**任意目录**下打开终端,输入 `curl localhost:3000` 命令测试本地服务
+
+```shell script
+curl localhost:3000
+```
+
+或者打开浏览器直接访问 `localhost:3000` 网址也会得到 `Hello World` 响应.
 
 ## 阅读更多
 
