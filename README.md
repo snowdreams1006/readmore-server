@@ -2,7 +2,7 @@
 
 ## 编写 web 服务
 
-1. 在**当前目录**新建 `main.go` 文件且文件内容如下:
+- 在**当前目录**新建 `main.go` 文件且文件内容如下:
 
 ```go
 package main
@@ -20,30 +20,30 @@ func main() {
 }
 ```
 
-2. 在**当前目录**下打开终端,输入 `go run main.go` 命令启动本地服务
+- 在**当前目录**下打开终端,输入 `go run main.go` 命令启动本地服务
 
 ```go
 go run main.go
 ```
 
-除了直接启动服务之外,还可以输入 `go build -o readmore main.go` 在当前目录下生成可执行文件,后续执行 `./readmore` 启动本地服务.
+除了直接启动服务之外,还可以输入 `go build -o readmore-server main.go` 在当前目录下生成可执行文件,后续运行 `./readmore-server` 命令即可启动本地服务.
 
-3. 在**任意目录**下打开终端,输入 `curl localhost:3000` 命令测试本地服务
+- 在**任意目录**下打开终端,输入 `curl localhost` 命令测试本地服务
 
 ```shell script
-curl localhost:3000
+curl localhost
 ```
 
-或者打开浏览器直接访问 `localhost:3000` 网址也会得到 `Hello World` 响应.
+或者打开浏览器直接访问 `localhost` 网址也会得到 `Welcome to readmore.snowdreams1006.cn!` 的响应.
+
+- 如需停止本地服务,在上一步启动项目的终端同时按住 `Ctrl + C` 即可停止.
 
 ## 构建本地镜像
 
-# build the server
-
-1. 在**当前目录**下新建 `Dockerfile` 文件且文件内容如下:
+- 在**当前目录**下新建 `Dockerfile` 文件且文件内容如下:
 
 ```dockerfile
-FROM golang:1.13.1-alpine3.10 AS builder
+FROM golang:1.13.1-alpine3.10
 
 RUN mkdir -p /go/src/github.com/snowdreams1006/readmore-server
 
@@ -53,30 +53,36 @@ WORKDIR /go/src/github.com/snowdreams1006/readmore-server
 
 RUN go build -o readmore-server main.go
 
-CMD /go/src/github.com/snowdreams1006/readmore-server
+CMD /go/src/github.com/snowdreams1006/readmore-server/readmore-server
 ```
 
-2. 在**当前目录**下打开终端,输入 `docker build -t readmore .` 命令构建本地镜像
+- 在**当前目录**下打开终端,输入 `docker build -t readmore-server:v0.0.1 .` 命令构建本地镜像
 
 ```shell script
-docker build -t readmore .
+docker build -t readmore-server:v0.0.1 .
 ```
 
-> 请确保本地已安装 `docker` 环境,如果输入 `docker` 命令提示 `-bash: docker: command not found` 则表示未安装 `docker` 环境,请参考[]()完成安装.
+> 请确保本地已安装 `docker` 环境,如果输入 `docker` 命令提示 `-bash: docker: command not found` 则表示未安装 `docker` 环境,请参考[docker-for-mac](https://docs.docker.com/docker-for-mac/install/)完成安装.
 
-3. 在**任意目录**下打开终端,输入 `docker run --rm -it -d -p 3000:3000 readmore` 命令测试本地镜像
+- 在**任意目录**下打开终端,输入 `docker run --rm -d --name readmore-server -p 80:80 readmore-server:v0.0.1` 命令测试本地镜像
 
 ```shell script
-docker run --rm -it -d -p 3000:3000 readmore
+docker run --rm -d --name readmore-server -p 80:80 readmore-server:v0.0.1
 ```
 
-4. 在**任意目录**下打开终端,输入 `curl localhost:3000` 命令测试本地服务
+- 在**任意目录**下打开终端,输入 `curl localhost` 命令测试本地服务
 
 ```shell script
-curl localhost:3000
+curl localhost
 ```
 
-或者打开浏览器直接访问 `localhost:3000` 网址也会得到 `Hello World` 响应.
+或者打开浏览器直接访问 `localhost` 网址也会得到 `Welcome to readmore.snowdreams1006.cn!` 响应.
+
+-  如需停止本地服务,在上一步启动项目的终端输入 `docker stop readmore-server` 命令即可停止容器.
+
+```shell script
+docker stop readmore-server
+```
 
 ## 阅读更多
 
