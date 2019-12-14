@@ -1,15 +1,17 @@
 FROM golang:1.13.1-alpine3.10 AS builder
 
-RUN mkdir -p /go/src/github.com/snowdreams1006/readmore-server
-
 COPY . /go/src/github.com/snowdreams1006/readmore-server
 
 WORKDIR /go/src/github.com/snowdreams1006/readmore-server
 
-RUN go build -o readmore-server main.go
+RUN go install
 
 FROM alpine:3.10
 
-COPY --from=builder /go/src/github.com/snowdreams1006/readmore-server/readmore-server /usr/local/bin/readmore-server
+LABEL maintainer="snowdreams1006 <snowdreams1006@163.com>"
+
+COPY --from=builder /go/bin/readmore-server /usr/local/bin/readmore-server
+
+EXPOSE 80
 
 CMD readmore-server

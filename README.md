@@ -154,8 +154,78 @@ docker run --rm -d --name readmore-server -p 80:80 YOURUSERNAME/readmore-server:
 
 `docker run --rm -d --name readmore-server -p 8989:80 snowdreams1006/readmore-server:v0.0.2` 瞬间从之前的近 `400Mb` 精简到现在的 `10Mb` 左右,不可谓不成功!
 
+### 自动构建
+
+- `main.go` 文件增加日志输出
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+	"time"
+)
+
+func main() {
+	go func() {
+		for {
+			time.Sleep(time.Second)
+			log.Println("Checking if started ...")
+			resp, err := http.Get("http://localhost:8080")
+			if err != nil {
+				log.Println("Failed: ", err)
+				continue
+			}
+			resp.Body.Close()
+			if resp.StatusCode != http.StatusOK {
+				log.Println("Not OK:", resp.StatusCode)
+				continue
+			}
+			break
+		}
+		log.Println("Server is up and running , http://localhost:8080")
+	}()
+
+	log.Println("Starting server ...")
+	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Fprint(writer, "Welcome to readmore.snowdreams1006.cn! \n")
+	})
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal("readmore-server started failed: ", err)
+	}
+}
+```
+
+- `Dockerfile` 文件增加作者信息
+
+```dockerfile
+FROM golang:1.13.1-alpine3.10 AS builder
+
+COPY . /go/src/github.com/snowdreams1006/readmore-server
+
+WORKDIR /go/src/github.com/snowdreams1006/readmore-server
+
+RUN go install
+
+FROM alpine:3.10
+
+LABEL maintainer="snowdreams1006 <snowdreams1006@163.com>"
+
+COPY --from=builder /go/bin/readmore-server /usr/local/bin/readmore-server
+
+EXPOSE 80
+
+CMD readmore-server
+```
+
+- 配置自动构建
+
 ## 阅读更多
 
 - 在线生成 `.gitignore` 忽略文件 [http://gitignore.io/](http://gitignore.io/)
 - [如何快速正确使用Docker部署Go Web App](https://www.jianshu.com/p/b66af29452e7)
 - [基于Docker和Golang搭建Web服务器](https://www.cnblogs.com/foxy/p/9274329.html)
+- [使用Github自动构建Docker](https://www.jianshu.com/p/b20bcfba52a8)
+- [golang http.ListenAndServe 阻塞导致if else不执行问题分析](http://blog.yoqi.me/lyq/16889.html)
