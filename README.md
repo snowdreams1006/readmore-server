@@ -110,6 +110,8 @@ docker search readmore-server
 
 ## 优化镜像
 
+### 精简镜像大小
+
 实际发现运行 `docker pull snowdreams1006/readmore-server:v0.0.1` 命令下载镜像的文件大小将近 `400Mb` ,毕竟只是一个简单的 `Web` 服务不能这么大,因此需要优化一下.
 
 - 增加精简版 `alpine` 镜像
