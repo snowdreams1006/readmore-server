@@ -56,18 +56,18 @@ RUN go build -o readmore-server main.go
 CMD /go/src/github.com/snowdreams1006/readmore-server/readmore-server
 ```
 
-- 在**当前目录**下打开终端,输入 `docker build -t readmore-server:v0.0.1 .` 命令构建本地镜像
+- 在**当前目录**下打开终端,输入 `docker build -t snowdreams1006/readmore-server:v0.0.1 .` 命令构建本地镜像
 
 ```shell script
-docker build -t readmore-server:v0.0.1 .
+docker build -t snowdreams1006/readmore-server:v0.0.1 .
 ```
 
 > 请确保本地已安装 `docker` 环境,如果输入 `docker` 命令提示 `-bash: docker: command not found` 则表示未安装 `docker` 环境,请参考[docker-for-mac](https://docs.docker.com/docker-for-mac/install/)完成安装.
 
-- 在**任意目录**下打开终端,输入 `docker run --rm -d --name readmore-server -p 80:80 readmore-server:v0.0.1` 命令测试本地镜像
+- 在**任意目录**下打开终端,输入 `docker run --rm -d --name readmore-server -p 80:80 snowdreams1006/readmore-server:v0.0.1` 命令测试本地镜像
 
 ```shell script
-docker run --rm -d --name readmore-server -p 80:80 readmore-server:v0.0.1
+docker run --rm -d --name readmore-server -p 80:80 snowdreams1006/readmore-server:v0.0.1
 ```
 
 - 在**任意目录**下打开终端,输入 `curl localhost` 命令测试本地服务
@@ -83,6 +83,30 @@ curl localhost
 ```shell script
 docker stop readmore-server
 ```
+
+## 发布本地镜像
+
+- 登录 dockerhub
+
+```shell script
+docker login
+```
+
+- 推送镜像
+
+> docker push snowdreams1006/readmore-server:v0.0.1
+
+```shell script
+docker push YOURUSERNAME/readmore-server:v0.0.1
+```
+
+- 搜索镜像
+
+```shell script
+docker search readmore-server
+```
+
+或者打开 `dockerhub` 网站直接搜索 `readmore-server` 验证是否发布成功,[体验地址](https://hub.docker.com/r/snowdreams1006/readmore-server)
 
 ## 阅读更多
 
