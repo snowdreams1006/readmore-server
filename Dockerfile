@@ -12,6 +12,6 @@ LABEL maintainer="snowdreams1006 <snowdreams1006@163.com>"
 
 COPY --from=builder /go/bin/readmore-server /usr/local/bin/readmore-server
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD readmore-server

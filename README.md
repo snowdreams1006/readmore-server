@@ -16,7 +16,7 @@ func main() {
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Fprint(writer, "Welcome to readmore.snowdreams1006.cn! \n")
 	})
-	http.ListenAndServe(":80",nil)
+	http.ListenAndServe(":8080",nil)
 }
 ```
 
@@ -28,10 +28,10 @@ go run main.go
 
 除了直接启动服务之外,还可以输入 `go build -o readmore-server main.go` 在当前目录下生成可执行文件,后续运行 `./readmore-server` 命令即可启动本地服务.
 
-- 在**任意目录**下打开终端,输入 `curl localhost` 命令测试本地服务
+- 在**任意目录**下打开终端,输入 `curl localhost:8080` 命令测试本地服务
 
 ```shell script
-curl localhost
+curl localhost:8080
 ```
 
 或者打开浏览器直接访问 `localhost` 网址也会得到 `Welcome to readmore.snowdreams1006.cn!` 的响应.
@@ -70,13 +70,13 @@ docker build -t YOURUSERNAME/readmore-server:v0.0.1 .
 docker run --rm -d --name readmore-server -p 80:80 YOURUSERNAME/readmore-server:v0.0.1
 ```
 
-- 在**任意目录**下打开终端,输入 `curl localhost` 命令测试本地服务
+- 在**任意目录**下打开终端,输入 `curl localhost:8080` 命令测试本地服务
 
 ```shell script
-curl localhost
+curl localhost:8080
 ```
 
-或者打开浏览器直接访问 `localhost` 网址也会得到 `Welcome to readmore.snowdreams1006.cn!` 响应.
+或者打开浏览器直接访问 `localhost:8080` 网址也会得到 `Welcome to readmore.snowdreams1006.cn!` 响应.
 
 -  如需停止本地服务,在上一步启动项目的终端输入 `docker stop readmore-server` 命令即可停止容器.
 
@@ -149,10 +149,10 @@ docker push YOURUSERNAME/readmore-server:v0.0.2
 - 再次体验
 
 ```shell script
-docker run --rm -d --name readmore-server -p 80:80 YOURUSERNAME/readmore-server:v0.0.2
+docker run --rm -d --name readmore-server -p 8080:8080 YOURUSERNAME/readmore-server:v0.0.2
 ```
 
-`docker run --rm -d --name readmore-server -p 8989:80 snowdreams1006/readmore-server:v0.0.2` 瞬间从之前的近 `400Mb` 精简到现在的 `10Mb` 左右,不可谓不成功!
+`docker run --rm -d --name readmore-server -p 8080:8080 snowdreams1006/readmore-server:v0.0.2` 瞬间从之前的近 `400Mb` 精简到现在的 `10Mb` 左右,不可谓不成功!
 
 ### 自动构建
 
@@ -215,7 +215,7 @@ LABEL maintainer="snowdreams1006 <snowdreams1006@163.com>"
 
 COPY --from=builder /go/bin/readmore-server /usr/local/bin/readmore-server
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD readmore-server
 ```
