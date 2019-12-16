@@ -222,6 +222,49 @@ CMD readmore-server
 
 - 配置自动构建
 
+## 打包发布
+
+- docker-compose
+
+```yaml
+version: '3.7'
+services:
+  bark-server:
+    image: snowdreams1006/readmore-server
+    container_name: readmore-server
+    restart: always
+    ports:
+      - "8080:8080"
+```
+
+- Makefile
+
+```makefile
+BUILD_VERSION   := $(shell cat version)
+
+all:
+	gox -osarch="darwin/amd64 linux/386 linux/amd64" \
+        -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}" \
+    	-ldflags "-w -s"
+
+docker:
+	docker build -t snowdreams1006/readmore-server:${BUILD_VERSION} .
+
+clean:
+	rm -rf dist
+
+install:
+	go install
+
+.PHONY : all release docker clean install
+```
+
+- go mod
+
+```shell script
+go mod init
+```
+
 ## 阅读更多
 
 - 在线生成 `.gitignore` 忽略文件 [http://gitignore.io/](http://gitignore.io/)
@@ -229,3 +272,4 @@ CMD readmore-server
 - [基于Docker和Golang搭建Web服务器](https://www.cnblogs.com/foxy/p/9274329.html)
 - [使用Github自动构建Docker](https://www.jianshu.com/p/b20bcfba52a8)
 - [golang http.ListenAndServe 阻塞导致if else不执行问题分析](http://blog.yoqi.me/lyq/16889.html)
+- [10分钟学会go module](https://blog.csdn.net/e421083458/article/details/89762113)
