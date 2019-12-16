@@ -1,6 +1,47 @@
 # readmore-server 
 
-## 编写 web 服务
+## 安装
+
+### Docker 用户
+
+![Docker Automated build](https://img.shields.io/docker/automated/snowdreams1006/readmore-server.svg) 
+![MicroBadger Size](https://img.shields.io/microbadger/image-size/snowdreams1006/readmore-server.svg) 
+![MicroBadger Layers](https://img.shields.io/microbadger/layers/snowdreams1006/readmore-server.svg)
+
+- docker 
+
+```shell script
+docker run -d --name readmore -p 8080:8080 snowdreams1006/readmore-server
+```
+
+- docker-compose
+
+``` sh
+mkdir readmore-server && cd readmore-server
+curl -sL https://git.io/fhAsj > docker-compose.yaml
+docker-compose up -d
+```
+
+### 普通用户
+
+1. 根据平台下载可执行文件,见[下载页面](https://github.com/snowdreams1006/readmore-server/releases) page
+2. 赋予二进制命令可执行权限 : `chmod +x readmore-server`
+3. 启动服务器 : `./Bark_linux_amd64 -l 0.0.0.0 -p 8080`
+4. 测试服务器 : `curl localhost:8080/ping`
+
+> Ping成功后，在APP端填入你的服务器IP或域名
+
+## 参与贡献
+
+### 开发环境
+
+项目至少要求 `golang 1.12` 编译并且要求 `go module` 支持.
+
+- Golang 1.13
+- GoLand 2018.3.4 or other Go IDE
+- Docker(Optional)
+
+### 编写 web 服务
 
 - 在**当前目录**新建 `main.go` 文件且文件内容如下:
 
@@ -38,7 +79,7 @@ curl localhost:8080
 
 - 如需停止本地服务,在上一步启动项目的终端同时按住 `Ctrl + C` 即可停止.
 
-## 构建本地镜像
+### 构建本地镜像
 
 - 在**当前目录**下新建 `Dockerfile` 文件且文件内容如下:
 
@@ -84,7 +125,7 @@ curl localhost:8080
 docker stop readmore-server
 ```
 
-## 发布本地镜像
+### 发布本地镜像
 
 - 登录 dockerhub
 
@@ -108,9 +149,7 @@ docker search readmore-server
 
 或者打开 `dockerhub` 网站直接搜索 `readmore-server` 验证是否发布成功,[体验地址](https://hub.docker.com/r/snowdreams1006/readmore-server)
 
-## 优化镜像
-
-### 精简镜像大小
+### 优化镜像
 
 实际发现运行 `docker pull snowdreams1006/readmore-server:v0.0.1` 命令下载镜像的文件大小将近 `400Mb` ,毕竟只是一个简单的 `Web` 服务不能这么大,因此需要优化一下.
 
@@ -222,7 +261,7 @@ CMD readmore-server
 
 - 配置自动构建
 
-## 打包发布
+### 打包发布
 
 - docker-compose
 
@@ -318,7 +357,7 @@ EXPOSE 8080
 CMD ["readmore-server"]
 ```
 
-## 阅读更多
+### 阅读更多
 
 - 在线生成 `.gitignore` 忽略文件 [http://gitignore.io/](http://gitignore.io/)
 - [如何快速正确使用Docker部署Go Web App](https://www.jianshu.com/p/b66af29452e7)
