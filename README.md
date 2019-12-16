@@ -265,6 +265,59 @@ install:
 go mod init
 ```
 
+```makefile
+BUILD_VERSION   := $(shell cat version)
+
+all:
+	gox -osarch="darwin/amd64 linux/386 linux/amd64" \
+        -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}" \
+    	-ldflags "-w -s"
+
+docker:
+	docker build -t snowdreams1006/readmore-server:${BUILD_VERSION} .
+
+clean:
+	rm -rf dist
+
+install:
+	go install
+
+.PHONY : all release docker clean install
+
+.EXPORT_ALL_VARIABLES:
+
+GO111MODULE = on
+GOPROXY = https://goproxy.io
+GOSUMDB = sum.golang.google.cn
+```
+
+```dockerfile
+FROM golang:1.13.1-alpine3.10 AS builder
+
+ENV GO111MODULE on
+ENV GOPROXY https://goproxy.io
+ENV GOSUMDB sum.golang.google.cn
+
+COPY . /go/src/github.com/snowdreams1006/readmore-server
+
+WORKDIR /go/src/github.com/snowdreams1006/readmore-server
+
+RUN go install
+
+FROM alpine:3.10
+
+LABEL maintainer="snowdreams1006 <snowdreams1006@163.com>"
+
+RUN apk upgrade \
+    && apk add ca-certificates
+
+COPY --from=builder /go/bin/readmore-server /usr/local/bin/readmore-server
+
+EXPOSE 8080
+
+CMD ["readmore-server"]
+```
+
 ## 阅读更多
 
 - 在线生成 `.gitignore` 忽略文件 [http://gitignore.io/](http://gitignore.io/)

@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  bark-server:
+  readmore-server:
     image: snowdreams1006/readmore-server
     container_name: readmore-server
     restart: always

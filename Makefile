@@ -15,3 +15,9 @@ install:
 	go install
 
 .PHONY : all release docker clean install
+
+.EXPORT_ALL_VARIABLES:
+
+GO111MODULE = on
+GOPROXY = https://goproxy.io
+GOSUMDB = sum.golang.google.cn
