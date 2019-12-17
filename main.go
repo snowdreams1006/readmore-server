@@ -28,9 +28,14 @@ func main() {
 	}()
 
 	log.Println("Starting server ...")
+
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Fprint(writer, "Welcome to readmore.snowdreams1006.cn! \n")
 	})
+	http.HandleFunc("/ping", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Fprint(writer, "Pong \n")
+	})
+
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("readmore-server started failed: ", err)
 	}
