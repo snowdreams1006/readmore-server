@@ -18,7 +18,7 @@ docker run -d --name readmore -p 8080:8080 snowdreams1006/readmore-server
 
 ``` sh
 mkdir readmore-server && cd readmore-server
-curl -sL https://git.io/fhAsj > docker-compose.yaml
+curl -sL https://raw.githubusercontent.com/snowdreams1006/readmore-server/master/docker-compose.yaml > docker-compose.yaml
 docker-compose up -d
 ```
 
@@ -357,6 +357,18 @@ EXPOSE 8080
 CMD ["readmore-server"]
 ```
 
+### docker 常用命令
+
+删除未命名的进行
+
+```shell script
+docker rmi $(docker images | grep '<none>' | awk '{print $3}')
+```
+
+```shell script
+docker rmi $(docker images -f "dangling=true" -q)
+```
+
 ### 阅读更多
 
 - 在线生成 `.gitignore` 忽略文件 [http://gitignore.io/](http://gitignore.io/)
@@ -365,3 +377,5 @@ CMD ["readmore-server"]
 - [使用Github自动构建Docker](https://www.jianshu.com/p/b20bcfba52a8)
 - [golang http.ListenAndServe 阻塞导致if else不执行问题分析](http://blog.yoqi.me/lyq/16889.html)
 - [10分钟学会go module](https://blog.csdn.net/e421083458/article/details/89762113)
+- [docker 批量删除无用的容器或镜像](https://blog.csdn.net/qq_36961530/article/details/79554964)
+- [Docker 删除所有无名称的镜像（悬空镜像）](https://www.cnblogs.com/stulzq/p/8962388.html)

@@ -14,9 +14,6 @@ FROM alpine:3.10
 
 LABEL maintainer="snowdreams1006 <snowdreams1006@163.com>"
 
-RUN apk upgrade \
-    && apk add ca-certificates
-
 COPY --from=builder /go/bin/readmore-server /usr/local/bin/readmore-server
 
 EXPOSE 8080
