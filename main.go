@@ -38,6 +38,9 @@ func main() {
 	http.HandleFunc("/test", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Fprint(writer, "Received your test request! \n")
 	})
+	http.HandleFunc("/readme", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Fprint(writer, "Update to v0.0.5! \n")
+	})
 
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("readmore-server started failed: ", err)
